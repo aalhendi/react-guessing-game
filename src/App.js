@@ -1,7 +1,36 @@
 import "./App.css";
+import { GlobalStyle } from "./styles";
+import { useState } from "react";
+import { ThemeContext, ThemeProvider } from "styled-components";
+
+import Home from "./components/Home";
+
+const theme = {
+  light: {
+    mainColor: "#3F4031",
+    backgroundColor: "#bebfa3",
+    altColor: "#8C281F",
+  },
+  dark: {
+    mainColor: "#A9C6D9",
+    backgroundColor: "#01070D",
+    altColor: "#b9d832",
+  },
+};
 
 function App() {
-  return <div></div>;
+  const [currentTheme, setCurrentTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setCurrentTheme(currentTheme === "light" ? "dark" : "light");
+  };
+
+  return (
+    <ThemeProvider theme={theme[currentTheme]}>
+      <GlobalStyle></GlobalStyle>
+      <Home />
+    </ThemeProvider>
+  );
 }
 
 export default App;
