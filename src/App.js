@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ThemeContext, ThemeProvider } from "styled-components";
 
 import Home from "./components/Home";
+import Game from "./components/Game";
 
 const theme = {
   light: {
@@ -29,6 +30,7 @@ function App() {
     <ThemeProvider theme={theme[currentTheme]}>
       <GlobalStyle></GlobalStyle>
       <Home />
+      <Game />
     </ThemeProvider>
   );
 }
