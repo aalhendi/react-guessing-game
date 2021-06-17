@@ -1,11 +1,14 @@
-import { OverlayStyled, SettingsStyled } from "../styles";
+import reactDom from "react-dom";
+//import { OverlayStyled, SettingsStyled } from "../styles";
 
+//TODO: Swap these to styled components (Overlay Styled, SettingsStyled) (?)
 const SettingsStyles = {
   position: "fixed",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  backgroundColor: "#bebfa3",
+  backgroundColor: "#d9d9d9",
+  textAlign: "center",
 };
 const OverlayStyle = {
   position: "fixed",
@@ -21,13 +24,16 @@ const Settings = ({ isOpen, children, onClose }) => {
   if (!isOpen) {
     return null;
   }
-  return (
-    <div style={OverlayStyle}>
-      <div style={SettingsStyles}>
-        <button onClick={onClose}>Close Settings</button>
-        {children}
+  return reactDom.createPortal(
+    <>
+      <div style={OverlayStyle}>
+        <div style={SettingsStyles}>
+          <button onClick={onClose}>Close Settings</button>
+          {children}
+        </div>
       </div>
-    </div>
+    </>,
+    document.getElementById("portal")
   );
 };
 

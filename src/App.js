@@ -1,7 +1,8 @@
 import "./App.css";
 import { GlobalStyle } from "./styles";
+import { ThemeButton } from "./styles";
 import { useState } from "react";
-import { ThemeContext, ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components"; //Theme context imported never used
 
 import Home from "./components/Home";
 import Game from "./components/Game";
@@ -28,7 +29,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>
-      <GlobalStyle></GlobalStyle>
+      <GlobalStyle />
+      <ThemeButton size="3em" onClick={toggleTheme} />
       <Home />
       <Game />
     </ThemeProvider>
