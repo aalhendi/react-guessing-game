@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Settings from "./SettingsModal";
-import { SettingsIcon } from "../styles";
+import { SettingsIcon, GuessBox } from "../styles";
 
 const generateRandomNumber = (rangeMin, rangeMax) => {
   const min = Math.ceil(rangeMin);
@@ -74,16 +74,16 @@ const Game = () => {
     <div>
       <h3>Take Your Guess </h3>
       <div>
-        <input
+        <GuessBox
           type="number"
           placeholder={`Number ${minNumber}-${maxNumber}`}
           onChange={getUserInput}
           onKeyDown={handleKeyPress}
         />
+        <button onClick={() => handleSubmit(userInput)}>Submit</button>
+        <button onClick={handleReset}>Try Again!</button>
+        <h4>You have {lives} lives remaining.</h4>
       </div>
-      <button onClick={() => handleSubmit(userInput)}>Submit</button>
-      <button onClick={handleReset}>Try Again!</button>
-      <p>You have {lives} lives remaining.</p>
       <SettingsIcon size="3em" onClick={() => setIsSettingsOpen(true)} />
 
       <Settings
