@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Settings from "./SettingsModal";
 
 const generateRandomNumber = (rangeMin, rangeMax) => {
   const min = Math.ceil(rangeMin);
@@ -7,13 +8,16 @@ const generateRandomNumber = (rangeMin, rangeMax) => {
 };
 
 const Game = () => {
-  const startingLives = 5;
+  const [startingLives, setStartingLives] = useState(5);
   const [lives, setLives] = useState(startingLives);
   const [userInput, setUserInput] = useState(null);
   const [winningNumber, setWinningNumber] = useState(
     generateRandomNumber(1, 100)
   );
+  const [minNumber, setMinNumber] = useState(1);
+  const [maxNumber, setMaxNumber] = useState(100);
   const [userState, setUserState] = useState(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const getUserInput = (event) => {
     setUserInput(event.target.value);
@@ -29,7 +33,7 @@ const Game = () => {
   const handleReset = () => {
     setLives(startingLives);
     setUserState(null);
-    setWinningNumber(generateRandomNumber(1, 100));
+    setWinningNumber(generateRandomNumber(minNumber, maxNumber));
   };
 
   const handleSubmit = (input) => {
@@ -39,8 +43,6 @@ const Game = () => {
 
   const compareNumber = (userNumber, gameNumber) => {
     if (userNumber === gameNumber) {
-      //Handle win
-      alert("You won!");
       setUserState(1);
     } else if (userNumber > gameNumber) {
       setLives((prevState) => prevState - 1);
@@ -72,14 +74,37 @@ const Game = () => {
       <label>Take Your Guess </label>
       <input
         type="number"
-        placeholder="eg. 99"
+        placeholder={`Number ${minNumber}-${maxNumber}`}
         onChange={getUserInput}
         onKeyDown={handleKeyPress}
       />
       <button onClick={() => handleSubmit(userInput)}>Submit</button>
       <button onClick={handleReset}>Try Again!</button>
       <p>You have {lives} lives remaining.</p>
-      <div>{}</div>
+      <button onClick={() => setIsSettingsOpen(true)}>Open Settings</button>
+      <Settings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      >
+        <br />
+        Set minNumber:
+        <input type="number" placeholder={minNumber} onChange={getUserInput} />
+        <button onClick={() => setMinNumber(userInput)}>set</button>
+        <br />
+        Set maxNumber:
+        <input type="number" placeholder={maxNumber} onChange={getUserInput} />
+        <button onClick={() => setMaxNumber(userInput)}>set</button>
+        <br />
+        <button onClick={() => setStartingLives((prevState) => prevState - 1)}>
+          -
+        </button>
+        Starting Lives: {startingLives}
+        <button onClick={() => setStartingLives((prevState) => prevState + 1)}>
+          +
+        </button>
+        <br />
+        <button onClick={() => setStartingLives(5)}>Reset Lives</button>
+      </Settings>
     </div>
   );
 };
