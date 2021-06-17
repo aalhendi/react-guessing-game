@@ -8,36 +8,30 @@ export const GlobalStyle = createGlobalStyle`
     color: ${(props) => props.theme.altColor};
   }
 
-  h2 {
-    text-align: center;
-  }
-
-  h3 {
-    text-align: center;
-  }
-
-  input {
-    text-align: center;
-  }
-
   div {
-    margin: auto;
-    display: block;
+    text-align: center;
   }
 
   button {
     margin: auto;
     display: block;
-  }
-
-  p {
-    text-align: center;
+    margin: 1rem auto;
+    border-radius: 40px;
+    border: 2px solid ${(props) => props.theme.mainColor};
+    background-color: ${(props) => props.theme.mainColor};
+    color: #ffffff;
   }
 
   body {
     color: ${(props) => props.theme.mainColor};
     background-color: ${(props) => props.theme.backgroundColor}
   }
+`;
+
+export const GuessBox = styled.input`
+  text-align: center;
+  display: block;
+  margin: 0 auto;
 `;
 
 export const ThemeButton = styled(DarkTheme)`
