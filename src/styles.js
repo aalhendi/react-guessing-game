@@ -32,6 +32,8 @@ export const GuessBox = styled.input`
   text-align: center;
   display: block;
   margin: 0 auto;
+  border-radius: 40px;
+  border: 2px solid ${(props) => props.theme.mainColor};
 `;
 
 export const ThemeButton = styled(DarkTheme)`

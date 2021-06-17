@@ -9,6 +9,7 @@ const SettingsStyles = {
   transform: "translate(-50%, -50%)",
   backgroundColor: "#d9d9d9",
   textAlign: "center",
+  padding: "0 5% 0 5%",
 };
 const OverlayStyle = {
   position: "fixed",
