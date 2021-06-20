@@ -22,6 +22,7 @@ const Game = () => {
   const [isHintsOpen, setIsHintsOpen] = useState(false);
   const [closestGuessAbove, setClosestGuessAbove] = useState(null);
   const [closestGuessBelow, setClosestGuessBelow] = useState(null);
+  const [winMultiplyer, setWinMultiplyer] = useState(1.1);
 
   const getUserInput = (event) => {
     setUserInput(event.target.value);
@@ -38,6 +39,9 @@ const Game = () => {
     setLives(startingLives);
     setClosestGuessAbove(null);
     setClosestGuessBelow(null);
+    if (userState) {
+      setMaxNumber((prevState) => Math.round((prevState *= winMultiplyer)));
+    }
     setWinningNumber(generateRandomNumber(minNumber, maxNumber));
     setUserState(null);
   };
@@ -51,6 +55,7 @@ const Game = () => {
     setStartingLives(5);
     setMinNumber(1);
     setMaxNumber(100);
+    setWinMultiplyer(1.1);
   };
 
   const compareNumber = (userNumber, gameNumber) => {
@@ -104,12 +109,11 @@ const Game = () => {
         <HintButton onClick={() => setIsHintsOpen(!isHintsOpen)}>
           Hints ?
         </HintButton>
+        {/* I HATE NESTED TERNARY OPERATORS */}
         <div>
           {isHintsOpen ? (
             lives === startingLives ? (
-              <h4>
-                {minNumber} ≤ n ≤ {maxNumber}
-              </h4>
+              <h4>Guess first &gt;:/</h4>
             ) : closestGuessBelow === null ? (
               <h4>
                 {minNumber} ≤ n {closestGuessAbove}
@@ -151,6 +155,7 @@ const Game = () => {
           onChange={getUserInput}
         />
         <button onClick={() => setMinNumber(userInput)}>Set Min</button>
+
         <label>Max Number:</label>
         <GuessBox
           type="number"
@@ -158,6 +163,7 @@ const Game = () => {
           onChange={getUserInput}
         />
         <button onClick={() => setMaxNumber(userInput)}>Set Max</button>
+
         <label>Starting Lives:</label>
         <GuessBox
           type="number"
@@ -165,6 +171,21 @@ const Game = () => {
           onChange={getUserInput}
         />
         <button onClick={() => setStartingLives(userInput)}>Set Lives</button>
+
+        <span>
+          <button
+            onClick={() => setWinMultiplyer((prevState) => prevState - 0.1)}
+          >
+            -
+          </button>
+          <label>Win Multiplyer: {winMultiplyer.toFixed(2)}</label>
+          <button
+            onClick={() => setWinMultiplyer((prevState) => prevState + 0.1)}
+          >
+            +
+          </button>
+        </span>
+
         <button onClick={handleSetDefaults}>Reset Settings</button>
       </Settings>
     </div>
