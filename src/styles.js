@@ -28,6 +28,17 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export const HintButton = styled.button`
+  margin: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 40px;
+  border: 2px solid ${(props) => props.theme.altColor};
+  background-color: ${(props) => props.theme.altColor};
+  color: #ffffff;
+  font-weight: bold;
+`;
+
 export const GuessBox = styled.input`
   text-align: center;
   display: block;

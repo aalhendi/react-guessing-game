@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Settings from "./SettingsModal";
-import { SettingsIcon, GuessBox } from "../styles";
+import { SettingsIcon, GuessBox, HintButton } from "../styles";
 
 const generateRandomNumber = (rangeMin, rangeMax) => {
   const min = Math.ceil(rangeMin);
@@ -19,6 +19,9 @@ const Game = () => {
   const [winningNumber, setWinningNumber] = useState(
     generateRandomNumber(minNumber, maxNumber)
   );
+  const [isHintsOpen, setIsHintsOpen] = useState(false);
+  const [closestGuessAbove, setClosestGuessAbove] = useState(null);
+  const [closestGuessBelow, setClosestGuessBelow] = useState(null);
 
   const getUserInput = (event) => {
     setUserInput(event.target.value);
@@ -33,8 +36,10 @@ const Game = () => {
 
   const handleReset = () => {
     setLives(startingLives);
-    setUserState(null);
+    setClosestGuessAbove(null);
+    setClosestGuessBelow(null);
     setWinningNumber(generateRandomNumber(minNumber, maxNumber));
+    setUserState(null);
   };
 
   const handleSubmit = (input) => {
@@ -53,10 +58,26 @@ const Game = () => {
       setUserState(1);
     } else if (userNumber > gameNumber) {
       setLives((prevState) => prevState - 1);
-      console.log(winningNumber);
+      if (!closestGuessAbove) {
+        setClosestGuessAbove(userNumber);
+      } else if (
+        Math.abs(userNumber - gameNumber) <
+        Math.abs(closestGuessAbove - gameNumber)
+      ) {
+        setClosestGuessAbove(userNumber);
+      }
+      console.log(gameNumber);
     } else {
       setLives((prevState) => prevState - 1);
-      console.log(winningNumber);
+      if (!closestGuessBelow) {
+        setClosestGuessBelow(userNumber);
+      } else if (
+        Math.abs(userNumber - gameNumber) <
+        Math.abs(closestGuessBelow - gameNumber)
+      ) {
+        setClosestGuessBelow(userNumber);
+      }
+      console.log(gameNumber);
     }
   };
 
@@ -80,6 +101,32 @@ const Game = () => {
     <div>
       <div>
         <h3>Take Your Guess </h3>
+        <HintButton onClick={() => setIsHintsOpen(!isHintsOpen)}>
+          Hints ?
+        </HintButton>
+        <div>
+          {isHintsOpen ? (
+            lives === startingLives ? (
+              <h4>
+                {minNumber} ≤ n ≤ {maxNumber}
+              </h4>
+            ) : closestGuessBelow === null ? (
+              <h4>
+                {minNumber} ≤ n {closestGuessAbove}
+              </h4>
+            ) : closestGuessAbove === null ? (
+              <h4>
+                {closestGuessBelow} ≤ n ≤ {maxNumber}
+              </h4>
+            ) : (
+              <h4>
+                {closestGuessBelow} ≤ n ≤ {closestGuessAbove}
+              </h4>
+            )
+          ) : (
+            <span>&nbsp; &nbsp;</span>
+          )}
+        </div>
         <GuessBox
           type="number"
           placeholder={`Number ${minNumber}-${maxNumber}`}
