@@ -22,7 +22,7 @@ const Game = () => {
   const [isHintsOpen, setIsHintsOpen] = useState(false);
   const [closestGuessAbove, setClosestGuessAbove] = useState(null);
   const [closestGuessBelow, setClosestGuessBelow] = useState(null);
-  const [winMultiplyer, setWinMultiplyer] = useState(1.1);
+  const [winMultiplier, setWinMultiplier] = useState(1.1);
 
   const getUserInput = (event) => {
     setUserInput(event.target.value);
@@ -40,7 +40,7 @@ const Game = () => {
     setClosestGuessAbove(null);
     setClosestGuessBelow(null);
     if (userState) {
-      setMaxNumber((prevState) => Math.round((prevState *= winMultiplyer)));
+      setMaxNumber((prevState) => Math.round((prevState *= winMultiplier)));
     }
     setWinningNumber(generateRandomNumber(minNumber, maxNumber));
     setUserState(null);
@@ -55,7 +55,7 @@ const Game = () => {
     setStartingLives(5);
     setMinNumber(1);
     setMaxNumber(100);
-    setWinMultiplyer(1.1);
+    setWinMultiplier(1.1);
   };
 
   const compareNumber = (userNumber, gameNumber) => {
@@ -174,13 +174,13 @@ const Game = () => {
 
         <span>
           <button
-            onClick={() => setWinMultiplyer((prevState) => prevState - 0.1)}
+            onClick={() => setWinMultiplier((prevState) => prevState - 0.1)}
           >
             -
           </button>
-          <label>Win Multiplyer: {winMultiplyer.toFixed(2)}</label>
+          <label>Win Multiplier: {winMultiplier.toFixed(2)}</label>
           <button
-            onClick={() => setWinMultiplyer((prevState) => prevState + 0.1)}
+            onClick={() => setWinMultiplier((prevState) => prevState + 0.1)}
           >
             +
           </button>
